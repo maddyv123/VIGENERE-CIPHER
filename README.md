@@ -30,7 +30,65 @@ STEP-8: Repeat the above steps to generate the entire cipher text.
 
 
 ## PROGRAM
+def generate_key(text, key):
+   
+    key = list(key)
+    if len(key) == len(text):
+        return "".join(key)
+    else:
+        for i in range(len(text) - len(key)):
+            key.append(key[i % len(key)])
+    return "".join(key)
+
+
+def vigenere_encrypt(plain_text, key):
+    
+    encrypted_text = []
+    key = generate_key(plain_text, key)
+    for i in range(len(plain_text)):
+        if plain_text[i].isalpha():
+            shift = ord(key[i].upper()) - ord('A')
+            if plain_text[i].isupper():
+                encrypted_text.append(chr((ord(plain_text[i]) + shift - ord('A')) % 26 + ord('A')))
+            else:
+                encrypted_text.append(chr((ord(plain_text[i]) + shift - ord('a')) % 26 + ord('a')))
+        else:
+            encrypted_text.append(plain_text[i])
+    return "".join(encrypted_text)
+
+def vigenere_decrypt(cipher_text, key):
+    
+    decrypted_text = []
+    key = generate_key(cipher_text, key)
+    for i in range(len(cipher_text)):
+        if cipher_text[i].isalpha():
+            shift = ord(key[i].upper()) - ord('A')
+            if cipher_text[i].isupper():
+                decrypted_text.append(chr((ord(cipher_text[i]) - shift - ord('A')) % 26 + ord('A')))
+            else:
+                decrypted_text.append(chr((ord(cipher_text[i]) - shift - ord('a')) % 26 + ord('a')))
+        else:
+            decrypted_text.append(cipher_text[i])
+    return "".join(decrypted_text)
+
+# Example Usage
+
+plaintext = input("Enter the plaintext: ")
+
+key = input("Enter the key: ")
+
+encrypted = vigenere_encrypt(plaintext, key)
+
+decrypted = vigenere_decrypt(encrypted, key)
+
+print(f"Encrypted: {encrypted}")
+
+print(f"Decrypted: {decrypted}")
+
 
 ## OUTPUT
+![Screenshot 2025-03-27 090529](https://github.com/user-attachments/assets/9c989dbb-2857-4b85-a7ec-f226a0293c50)
+
 
 ## RESULT
+The code executed successfully!
